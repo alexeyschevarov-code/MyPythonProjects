@@ -21,7 +21,18 @@ responses = {
     "книга": ["Книги — отличный способ провести время. Что читаешь?"],
     "фильм": ["Фильмы — моя слабость. Какой жанр любишь?"],
     "школа": ["Учёба — важно. Как у тебя дела с учёбой?"],
-    "лето": ["Лето — лучшее время! Чем планируешь заниматься?"]
+    "лето": ["Лето — лучшее время! Чем планируешь заниматься?"],
+    "спасибо": ["Пожалуйста!", "Всегда рад помочь!"]
+}
+
+mood_responses = {
+    "плохо": ["Жаль слышать... Что случилось?"],
+    "норм": ["Норм — это уже хорошо! А что хорошего сегодня было?"],
+    "нормально": ["Нормально — это уже хорошо! А что хорошего сегодня было?"],
+    "хорошо": ["Рад за тебя! Что хорошего произошло?"],
+    "отлично": ["Круто! Расскажи, что такого отличного случилось?"],
+    "супер": ["Супер! Рад за тебя!"],
+    "ужасно": ["Ой, жаль... Расскажи, что произошло."]
 }
 
 while True:
@@ -41,11 +52,26 @@ while True:
         continue
     
     found = False
-    for key in responses:
-        if key in user_input:
-            print("Бот:", random.choice(responses[key]))
-            found = True
-            break
+    
+    # Специально для войны (самое первое проверяем)
+    if "войн" in user_input or "вв2" in user_input or "ww2" in user_input:
+        print("Бот:", random.choice(responses["война"]))
+        found = True
+    
+    # Проверяем настроение
+    if not found:
+        for mood in mood_responses:
+            if mood in user_input:
+                print("Бот:", random.choice(mood_responses[mood]))
+                found = True
+                break
+    
+    if not found:
+        for key in responses:
+            if key in user_input:
+                print("Бот:", random.choice(responses[key]))
+                found = True
+                break
     
     if not found:
         print("Бот: Интересно... Расскажи подробнее!")
