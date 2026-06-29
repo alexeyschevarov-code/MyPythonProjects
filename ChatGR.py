@@ -1,6 +1,6 @@
 import random
 
-print("=== ChatGR — твой чат-бот ===")
+print("=== ChatGR v0.9.4 ===")
 print("Напиши 'пока' или 'выход', чтобы закончить разговор\n")
 
 name = None
@@ -22,7 +22,12 @@ responses = {
     "фильм": ["Фильмы — моя слабость. Какой жанр любишь?"],
     "школа": ["Учёба — важно. Как у тебя дела с учёбой?"],
     "лето": ["Лето — лучшее время! Чем планируешь заниматься?"],
-    "спасибо": ["Пожалуйста!", "Всегда рад помочь!"]
+    "спасибо": ["Пожалуйста!", "Всегда рад помочь!"],
+    "ужасы": ["Ужасы — это адреналин! Какой твой любимый фильм ужасов?"],
+    "фантастика": ["Фантастика — моя любимая! Особенно про космос и будущее."],
+    "боевик": ["Боевики — это динамика! Какой твой любимый боевик?"],
+    "комедия": ["Комедии — это всегда весело! Что последнее рассмешило?"],
+    "драма": ["Драмы — глубокие истории. Какие драмы тебе нравятся?"]
 }
 
 mood_responses = {
@@ -53,18 +58,18 @@ while True:
     
     found = False
     
-    # Специально для войны (самое первое проверяем)
-    if "войн" in user_input or "вв2" in user_input or "ww2" in user_input:
-        print("Бот:", random.choice(responses["война"]))
-        found = True
-    
     # Проверяем настроение
+    for mood in mood_responses:
+        if mood in user_input:
+            print("Бот:", random.choice(mood_responses[mood]))
+            found = True
+            break
+    
     if not found:
-        for mood in mood_responses:
-            if mood in user_input:
-                print("Бот:", random.choice(mood_responses[mood]))
-                found = True
-                break
+        # Специально для войны (очень широкое распознавание)
+        if any(word in user_input for word in ["войн", "вв2", "ww2", "войну", "войны"]):
+            print("Бот:", random.choice(responses["война"]))
+            found = True
     
     if not found:
         for key in responses:
